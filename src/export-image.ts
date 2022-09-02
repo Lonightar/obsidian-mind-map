@@ -13,16 +13,17 @@ export async function exportSVG( svg: SVGElement ) {
   } )
 
   if( filePath ) {
-    const content = new Blob( [`${getSVGContent( svg )}`], { type: 'image/svg+xml' } )
-
-    const fsWriteStream  = fs.createWriteStream( filePath )
-    const writableStream = new WritableStream( fsWriteStream )
-    content.stream().pipeTo( writableStream ).then( () => {
-      new Notice( `Export successfully` )
-    } ).catch( ( error: Error ) => {
-      new Notice( `Export failed! ${error.message}` )
-      console.error( error )
-    } )
+    fsWriteStream = fs.createWriteStream(filePath, { encoding: 'utf8' });
+    fsWriteStream.write(getSVGContent(svg));
+//     const content = new Blob( [`${getSVGContent( svg )}`], { type: 'image/svg+xml' } )
+//     const fsWriteStream  = fs.createWriteStream( filePath )
+//     const writableStream = new WritableStream( fsWriteStream )
+//     content.stream().pipeTo( writableStream ).then( () => {
+//       new Notice( `Export successfully` )
+//     } ).catch( ( error: Error ) => {
+//       new Notice( `Export failed! ${error.message}` )
+//       console.error( error )
+//     } )
   }
 }
 
